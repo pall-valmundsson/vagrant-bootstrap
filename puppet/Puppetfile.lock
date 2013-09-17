@@ -1,8 +1,0 @@
-PATH
-  remote: ./local_modules/vagrantbootstrap
-  specs:
-    vagrantbootstrap (0.0.1)
-
-DEPENDENCIES
-  vagrantbootstrap (>= 0)
-
