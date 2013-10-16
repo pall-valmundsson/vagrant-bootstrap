@@ -1,7 +1,7 @@
 forge "http://forge.puppetlabs.com"
 
 # Bootstrap provisioning
-mod 'vagrantbootstrap', :path => './local_modules/vagrantbootstrap'
+mod 'vagrantbootstrap', :path => '/vagrant/puppet/local_modules/vagrantbootstrap'
 
 # Module from git
 # mod 'puppetlabs/apache',

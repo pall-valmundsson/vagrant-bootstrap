@@ -2,7 +2,7 @@
 # Source: https://github.com/mindreframer/vagrant-puppet-librarian/blob/master/shell/bootstrap.sh
 
 # Directory in which librarian-puppet should manage its modules directory
-PUPPET_DIR='/vagrant/puppet'
+PUPPET_DIR='/etc/puppet'
 
 # NB: librarian-puppet might need git installed. If it is not already installed
 # in your basebox, this will manually install it at this point using apt or yum
@@ -18,6 +18,10 @@ if [ ! -x $GIT ]; then
         echo "No package installer available. You may need to install git manually."
     fi
 fi
+
+# Copy the Puppetfile into $PUPPET_DIR
+# this keeps your Vagrant working directory clean of external modules
+cp /vagrant/puppet/Puppetfile $PUPPET_DIR
 
 if [ `gem query --local | grep librarian-puppet | wc -l` -eq 0 ]; then
   gem install librarian-puppet
