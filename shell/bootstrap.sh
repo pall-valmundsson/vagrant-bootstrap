@@ -19,9 +19,9 @@ if [ ! -x $GIT ]; then
     fi
 fi
 
-# Copy the Puppetfile into $PUPPET_DIR
+# Link the Puppetfile into $PUPPET_DIR
 # this keeps your Vagrant working directory clean of external modules
-cp /vagrant/puppet/Puppetfile $PUPPET_DIR
+ln -sf /vagrant/puppet/Puppetfile $PUPPET_DIR/Puppetfile
 
 if [ `gem query --local | grep librarian-puppet | wc -l` -eq 0 ]; then
   gem install librarian-puppet
