@@ -31,12 +31,12 @@ class vagrantbootstrap::helpers {
     $puppet_dir = '/vagrant/puppet'
 
     file { '/usr/local/bin/runpuppet':
-        content => "sudo puppet apply -vv  --modulepath=$puppet_dir/modules/ $puppet_dir/manifests/init.pp\n",
+        content => "sudo puppet apply -vv  --modulepath=${puppet_dir}/modules/ $puppet_dir/manifests/init.pp\n",
         mode => '0755',
     }
 
     file { '/usr/local/bin/runlibrarian':
-        content => 'cd $puppet_dir &&  sudo librarian-puppet update \n',
+        content => "cd ${puppet_dir} &&  sudo librarian-puppet update \n",
         mode => '0755',
     }
 }
