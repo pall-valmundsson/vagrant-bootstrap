@@ -3,6 +3,8 @@ forge "http://forge.puppetlabs.com"
 # Bootstrap provisioning
 mod 'vagrantbootstrap', :path => '/vagrant/puppet/local_modules/vagrantbootstrap'
 
+mod 'stahnma/epel'
+
 # Module from git
 # mod 'puppetlabs/apache',
 #   :git => 'https://github.com/puppetlabs/puppetlabs-apache.git'

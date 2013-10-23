@@ -6,13 +6,7 @@ class vagrantbootstrap {
 }
 
 class vagrantbootstrap::repos {
-    $epelrpm = 'http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm'
-
-    exec { "yum -y install $epelrpm":
-        path => '/usr/bin',
-        creates => '/etc/yum.repos.d/epel.repo',
-    }
-
+    class { 'epel': }
     #exec { 'yum -y update && touch /tmp/yum-updated':
     #    timeout => 0,
     #    unless => 'test -e /tmp/yum-updated',
