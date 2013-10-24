@@ -23,8 +23,8 @@ fi
 # this keeps your Vagrant working directory clean of external modules
 ln -sf /vagrant/puppet/Puppetfile $PUPPET_DIR/Puppetfile
 
-if [ `gem query --local | grep librarian-puppet | wc -l` -eq 0 ]; then
-  gem install librarian-puppet
+if [ `gem query --local | grep librarian-puppet-maestrodev | wc -l` -eq 0 ]; then
+  gem install librarian-puppet-maestrodev
   cd $PUPPET_DIR && librarian-puppet install --clean
 else
   cd $PUPPET_DIR && librarian-puppet update
