@@ -23,12 +23,12 @@ fi
 # this keeps your Vagrant working directory clean of external modules
 ln -sf /vagrant/puppet/Puppetfile $PUPPET_DIR/Puppetfile
 
-if [ `gem query --local | grep librarian-puppet-maestrodev | wc -l` -eq 0 ]; then
-  gem install librarian-puppet-maestrodev
-  cd $PUPPET_DIR && librarian-puppet install --clean
+if [ `gem query --local | grep r10k | wc -l` -eq 0 ]; then
+  gem install r10k --no-ri --no-rdoc
+  PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install
 else
-  cd $PUPPET_DIR && librarian-puppet update
+  PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install
 fi
 
 # now we run puppet
-puppet apply -vv  --modulepath=$PUPPET_DIR/modules/ $PUPPET_DIR/manifests/main.pp
+puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules $PUPPET_DIR/manifests/main.pp
