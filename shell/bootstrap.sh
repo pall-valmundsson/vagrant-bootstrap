@@ -31,4 +31,4 @@ fi
 PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install
 
 # And now we run puppet
-puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules $PUPPET_DIR/manifests/main.pp
+puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/sitemodules $PUPPET_DIR/manifests/main.pp

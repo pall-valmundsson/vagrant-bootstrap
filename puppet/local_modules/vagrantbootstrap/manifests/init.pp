@@ -26,7 +26,7 @@ class vagrantbootstrap::helpers {
     $vagrant_puppet_dir = '/vagrant/puppet'
 
     file { '/usr/local/bin/runpuppet':
-        content => "sudo puppet apply -vt --modulepath=${puppet_dir}/modules:${vagrant_puppet_dir}/local_modules ${vagrant_puppet_dir}/manifests/init.pp\n",
+        content => "sudo puppet apply -vt --modulepath=${puppet_dir}/modules:${vagrant_puppet_dir}/local_modules:/vagrant/puppet/sitemodules ${vagrant_puppet_dir}/manifests/init.pp\n",
         mode => '0755',
     }
 
