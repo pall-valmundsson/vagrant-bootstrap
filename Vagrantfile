@@ -36,6 +36,9 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.synced_folder "puppet/manifests", "/etc/puppet/manifests"
 
+  # Sync your r10k module repo clone into /vagrant/puppet/sitemodules
+  #config.vm.synced_folder "~/puppet-dev/sitemodules", "/vagrant/puppet/sitemodules"
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
