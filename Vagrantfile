@@ -19,8 +19,10 @@ Vagrant.configure("2") do |config|
 
   yaml_config = YAML.load_file('config.yaml')
 
-  yaml_config['local-modules'].each do |localmod|
-    config.vm.synced_folder localmod['local-path'], "/vagrant/puppet/local_modules/#{localmod['module-name']}"
+  if yaml_config['local-modules']
+    yaml_config['local-modules'].each do |localmod|
+      config.vm.synced_folder localmod['local-path'], "/vagrant/puppet/local_modules/#{localmod['module-name']}"
+    end
   end
   config.vm.synced_folder yaml_config['r10k-repo-path'], "/vagrant/puppet/r10kmodules"
 
