@@ -8,6 +8,12 @@ dist-module-directory: 'dist'
 # repositories within the Puppetfile require your SSH config.
 # The mount is read-only for security.
 sync-ssh-config: true
+# Hiera config
+# Change puppet/hiera.yaml :datadir: to reflect any path inside
+# the repo. /etc/puppet/hiera is a required constant in the path.
+hiera:
+    enabled:   true
+    repo-path: '/home/user/puppet-dev/hieradata'
 # The local modules array defines the modules that
 # are currently being hacked on locally. After the r10k
 # Puppetfile has been deployed these modules will be

@@ -22,6 +22,16 @@ fi
 # Link the sitemodule Puppetfile into $PUPPET_DIR
 ln -sf /vagrant/puppet/r10kmodules/Puppetfile $PUPPET_DIR/Puppetfile
 
+# If hiera is enabled, link hiera.yaml
+if [ -d "/vagrant/puppet/hiera" ]; then
+    echo "Synchronizing hiera data..."
+    ln -sf /vagrant/puppet/hiera.yaml $PUPPET_DIR/hiera.yaml
+    ln -sf /vagrant/puppet/hiera.yaml /etc/hiera.yaml
+    rm -rf /etc/puppet/hiera
+    rsync -a /vagrant/puppet/hiera /etc/puppet/
+    ln -sf /vagrant/puppet/vagranthost.local.yaml /etc/puppet/hiera/vagranthost.local.yaml
+fi
+
 # Install r10k
 echo "Installing r10k..."
 if [ `gem query --local | grep r10k | wc -l` -eq 0 ]; then

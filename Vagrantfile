@@ -24,6 +24,9 @@ Vagrant.configure("2") do |config|
       config.vm.synced_folder localmod['local-path'], "/vagrant/puppet/local_modules/#{localmod['module-name']}"
     end
   end
+  if yaml_config['hiera']['enabled']
+    config.vm.synced_folder yaml_config['hiera']['repo-path'], "/vagrant/puppet/hiera"
+  end
   config.vm.synced_folder yaml_config['r10k-repo-path'], "/vagrant/puppet/r10kmodules"
 
   if yaml_config['sync-ssh-config']
