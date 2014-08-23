@@ -1,0 +1,21 @@
+---
+# The path to the local clone of the r10k module repo
+r10k-repo-path: '/home/user/puppet-dev/r10kmodules'
+# The path inside the r10k module repo that holds
+# modules that aren't defined in the Puppetfile
+dist-module-directory: 'dist'
+# Mount ~/.ssh keys to root? This might be needed if access to
+# repositories within the Puppetfile require your SSH config.
+# The mount is read-only for security.
+sync-ssh-config: true
+# The local modules array defines the modules that
+# are currently being hacked on locally. After the r10k
+# Puppetfile has been deployed these modules will be
+# removed from the deployed module directory so the
+# local copies will be loaded by the puppet run.
+local-modules:
+    - module-name: 'mymodule'
+      local-path:  '/home/user/puppet-dev/puppet-mymodule'
+    - module-name: 'mysecondmodule'
+      local-path:  '/home/user/puppet-dev/puppet-mysecondmodule'
+

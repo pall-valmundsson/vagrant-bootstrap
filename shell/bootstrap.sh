@@ -20,7 +20,7 @@ if [ ! -x $GIT ]; then
 fi
 
 # Link the sitemodule Puppetfile into $PUPPET_DIR
-ln -sf /vagrant/puppet/sitemodules/Puppetfile $PUPPET_DIR/Puppetfile
+ln -sf /vagrant/puppet/r10kmodules/Puppetfile $PUPPET_DIR/Puppetfile
 
 # Install r10k
 if [ `gem query --local | grep r10k | wc -l` -eq 0 ]; then
@@ -28,7 +28,19 @@ if [ `gem query --local | grep r10k | wc -l` -eq 0 ]; then
 fi
 
 # Make r10k install all the modules
+echo "Running r10k..."
 PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install
 
+# Remove the local-modules from the Puppetfile deployed modulepath, if they're managed by that
+for module in /vagrant/puppet/local_modules/*
+do
+    module_name=$(basename ${module})
+    module_path="${PUPPET_DIR}/modules/${module_name}"
+    if [ -d "${module_path}" ]; then
+        echo "   Removing ${module} from Puppetfile deployed modules..."
+        rm -rf "${module_path}"
+    fi
+done
+
 # And now we run puppet
-puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/sitemodules $PUPPET_DIR/manifests/main.pp
+puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/sitemodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
