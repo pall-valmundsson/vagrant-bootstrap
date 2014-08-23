@@ -23,6 +23,7 @@ fi
 ln -sf /vagrant/puppet/r10kmodules/Puppetfile $PUPPET_DIR/Puppetfile
 
 # Install r10k
+echo "Installing r10k..."
 if [ `gem query --local | grep r10k | wc -l` -eq 0 ]; then
   gem install r10k --no-ri --no-rdoc
 fi
