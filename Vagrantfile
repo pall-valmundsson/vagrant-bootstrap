@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.synced_folder "puppet/manifests", "/etc/puppet/manifests"
 
-  yaml_config = YAML.load_file('config.yaml')
+  yaml_config = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yaml'))
 
   if yaml_config['local-modules']
     yaml_config['local-modules'].each do |localmod|
