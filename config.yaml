@@ -1,6 +1,6 @@
 ---
 # The path to the local clone of the r10k module repo
-r10k-repo-path: '/home/user/puppet-dev/r10kmodules'
+r10k-repo-path: '~/puppet-dev/r10kmodules'
 # The path inside the r10k module repo that holds
 # modules that aren't defined in the Puppetfile
 dist-module-directory: 'dist'
@@ -13,7 +13,7 @@ sync-ssh-config: true
 # the repo. /etc/puppet/hiera is a required constant in the path.
 hiera:
     enabled:   true
-    repo-path: '/home/user/puppet-dev/hieradata'
+    repo-path: '~/puppet-dev/hieradata'
 # The local modules array defines the modules that
 # are currently being hacked on locally. After the r10k
 # Puppetfile has been deployed these modules will be
@@ -21,7 +21,7 @@ hiera:
 # local copies will be loaded by the puppet run.
 local-modules:
     - module-name: 'mymodule'
-      local-path:  '/home/user/puppet-dev/puppet-mymodule'
+      local-path:  '~/puppet-dev/puppet-mymodule'
     - module-name: 'mysecondmodule'
-      local-path:  '/home/user/puppet-dev/puppet-mysecondmodule'
+      local-path:  '~/puppet-dev/puppet-mysecondmodule'
 
