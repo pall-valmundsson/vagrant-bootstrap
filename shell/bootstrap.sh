@@ -54,4 +54,4 @@ do
 done
 
 # And now we run puppet
-puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/sitemodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
+puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
