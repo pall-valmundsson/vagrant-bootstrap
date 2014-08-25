@@ -53,5 +53,11 @@ do
     fi
 done
 
+# Load facter overrides
+if [ -f "/vagrant/facter.override" ]; then
+    echo "Loading facter overrides..."
+    source /vagrant/facter.override
+fi
+
 # And now we run puppet
 puppet apply -vt --pluginsync --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
