@@ -1,4 +1,24 @@
 #!/bin/sh
+
+# Source: http://stackoverflow.com/a/21189044
+function parse_yaml {
+   local prefix=$2
+   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+   sed -ne "s|^\($s\):|\1|" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+   awk -F$fs '{
+      indent = length($1)/2;
+      vname[indent] = $2;
+      for (i in vname) {if (i > indent) {delete vname[i]}}
+      if (length($3) > 0) {
+         vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+      }
+   }'
+}
+
+
 # Source: https://github.com/mindreframer/vagrant-puppet-librarian/blob/master/shell/bootstrap.sh
 
 # Directory in which r10k should manage its modules directory
@@ -29,7 +49,11 @@ if [ -d "/vagrant/puppet/hiera" ]; then
     ln -sf /vagrant/puppet/hiera.yaml /etc/hiera.yaml
     rm -rf /etc/puppet/hiera
     rsync -a /vagrant/puppet/hiera /etc/puppet/
-    ln -sf /vagrant/puppet/vagranthost.local.yaml /etc/puppet/hiera/vagranthost.local.yaml
+
+    # Find the hiera datadir for yaml
+    eval $(parse_yaml /vagrant/puppet/hiera.yaml)
+    echo "YAML datadir: ${yaml__datadir}"
+    ln -sf /vagrant/puppet/vagranthost.local.yaml ${yaml__datadir}/vagranthost.local.yaml
 fi
 
 # Install r10k
@@ -55,9 +79,11 @@ done
 
 # Load facter overrides
 if [ -f "/vagrant/facter.override" ]; then
-    echo "Loading facter overrides..."
+    echo "Loading facter.override..."
     source /vagrant/facter.override
 fi
 
+env
+
 # And now we run puppet
-puppet apply -vt --pluginsync --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
+puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
