@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "ENVPUPPET=${ENVPUPPET}"
+echo "DIST_DIR=${DIST_DIR}"
+
 # Source: http://stackoverflow.com/a/21189044
 function parse_yaml {
    local prefix=$2
@@ -18,6 +21,18 @@ function parse_yaml {
    }'
 }
 
+# Enable envpuppet?
+if [ "${ENVPUPPET}" == "true" ]; then
+    # Enable in bash profiles
+    ln -sf /vagrant/shell/envpuppet.sh /etc/profile.d/envpuppet.sh
+    # ... and for the current shell
+    source /etc/profile.d/envpuppet.sh
+fi
+
+# Puppet component versions
+echo "Puppet agent version: $(puppet agent --version)"
+echo "Hiera version: $(hiera --version)"
+echo "Facter version: $(facter --version)"
 
 # Source: https://github.com/mindreframer/vagrant-puppet-librarian/blob/master/shell/bootstrap.sh
 
@@ -64,7 +79,7 @@ fi
 
 # Make r10k install all the modules
 echo "Running r10k..."
-PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install
+PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install -v
 
 # Remove the local-modules from the Puppetfile deployed modulepath, if they're managed by that
 for module in /vagrant/puppet/local_modules/*

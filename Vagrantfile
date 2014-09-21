@@ -27,6 +27,9 @@ Vagrant.configure("2") do |config|
   if yaml_config['hiera']['enabled']
     config.vm.synced_folder yaml_config['hiera']['repo-path'], "/vagrant/puppet/hiera"
   end
+  if yaml_config['envpuppet']['enabled']
+    config.vm.synced_folder yaml_config['envpuppet']['repos-base-path'], "/puppetlabs"
+  end
   config.vm.synced_folder yaml_config['r10k-repo-path'], "/vagrant/puppet/r10kmodules"
 
   if yaml_config['sync-ssh-config']
@@ -36,6 +39,8 @@ Vagrant.configure("2") do |config|
   # Shell provisioning to bootstrap r10k and puppet
   # bootstrap.sh uses the DISTDIR variable to append the modules
   # from the r10k repo to the modulepath of the puppet run
-  config.vm.provision :shell, :inline => "DIST_DIR=#{yaml_config['dist-module-directory']} /vagrant/shell/bootstrap.sh"
+  config.vm.provision :shell, :inline => <<-EOS
+    DIST_DIR=#{yaml_config['dist-module-directory']} ENVPUPPET=#{yaml_config['envpuppet']['enabled']} /vagrant/shell/bootstrap.sh
+  EOS
 
 end
