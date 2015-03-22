@@ -66,7 +66,10 @@ The file is basically sourced in bash before puppet runs.
 your Puppetfile. Adjust `dist-module-directory` if needed.
 3. Disable envpuppet support if you're not using it.
 4. Edit `puppet/manifests/main.pp` to your liking.
-5. `vagrant up`
+5. Run `vagrant up`
+6. Hack on modules
+7. Run `vagrant provision` to rerun puppet on the VM
+
 
 # Configuration
 Edit `config.yaml`, `facter.override` and `puppet/vagranthost.local.yaml` to
