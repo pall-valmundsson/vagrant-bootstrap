@@ -1,4 +1,4 @@
-# vagrant-bootstrap
+# vagrant-puppet-r10k-bootstrap
 A vagrant puppet setup that supports module development using
 [r10k](https://github.com/puppetlabs/r10k), hiera,
 [envpuppet](https://puppetlabs.com/blog/use-envpuppet-test-multiple-puppet-versions),
@@ -61,7 +61,7 @@ The file is basically sourced in bash before puppet runs.
 
 # Usage
 
-1. Clone the vagrant-bootstrap repository.
+1. Clone the vagrant-puppet-r10k-bootstrap repository.
 2. Change `r10k-repo-path` in `config.yaml` to point to your clone with
 your Puppetfile. Adjust `dist-module-directory` if needed.
 3. Disable envpuppet support if you're not using it.
