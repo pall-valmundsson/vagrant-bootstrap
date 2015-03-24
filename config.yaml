@@ -17,7 +17,7 @@ hiera:
 # envpuppet support
 # See: http://puppetlabs.com/blog/use-envpuppet-test-multiple-puppet-versions
 envpuppet:
-    enabled:         true
+    enabled:         false
     repos-base-path: '~/puppet-dev/puppetlabs'
 # The local modules array defines the modules that
 # are currently being hacked on locally. After the r10k
