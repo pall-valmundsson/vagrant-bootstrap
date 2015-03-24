@@ -1,5 +1,5 @@
 # vagrant-puppet-r10k-bootstrap
-A vagrant puppet setup that supports module development using
+A Vagrant Puppet setup that supports module development using
 [r10k](https://github.com/puppetlabs/r10k), hiera,
 [envpuppet](https://puppetlabs.com/blog/use-envpuppet-test-multiple-puppet-versions),
 facter overrides and more.
