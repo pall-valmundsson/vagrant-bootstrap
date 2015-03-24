@@ -24,9 +24,9 @@ envpuppet:
 # Puppetfile has been deployed these modules will be
 # removed from the deployed module directory so the
 # local copies will be loaded by the puppet run.
-local-modules:
-    - module-name: 'mymodule'
-      local-path:  '~/puppet-dev/puppet-mymodule'
-    - module-name: 'mysecondmodule'
-      local-path:  '~/puppet-dev/puppet-mysecondmodule'
+#local-modules:
+#    - module-name: 'mymodule'
+#      local-path:  '~/puppet-dev/puppet-mymodule'
+#    - module-name: 'mysecondmodule'
+#      local-path:  '~/puppet-dev/puppet-mysecondmodule'
 
