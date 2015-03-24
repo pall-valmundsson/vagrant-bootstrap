@@ -6,16 +6,17 @@ facter overrides (via custom environment variables) and more.
 
 ####Table of Contents
 1. [Use case](#use-case)
-2. [Features](#features)
+2. [Quickstart](#quickstart)
+3. [Basic Usage](#basic-usage)
+4. [Features](#features)
     * [r10k](#r10k)
     * [Local module override](#local-module-override)
     * [Hiera](#hiera)
     * [envpuppet](#envpuppet)
     * [Facter overrides](#facter-overrides)
-3. [Usage](#usage)
-4. [Configuration](#configuration)
-5. [Copyright](#copyright)
-6. [Credits](#credits)
+5. [Configuration](#configuration)
+6. [Copyright](#copyright)
+7. [Credits](#credits)
 
 ## Use case
 You need to be able to locally hack on roles, profiles or component
@@ -29,6 +30,37 @@ Assumptions:
 * you might be using hiera
 * you might be using envpuppet
 * you might depend on environment specific facts
+
+## Quickstart
+
+1. Run `curl -Ls https://github.com/pall-valmundsson/vagrant-puppet-r10k-bootstrap/archive/master.tar.gz | tar -zxf -`
+2. `cd vagrant-puppet-r10k-bootstrap`
+3. Edit `config.yaml`:
+   * change `r10k-repo-path` to your r10k control repository clone
+   * change `hiera: repo-base-path:` to your hiera repository clone (or
+     disable hiera)
+4. If hiera is enabled review `puppet/hiera.yaml` to verify at least the
+   `:datadir:` parameter.
+3. Run `vagrant up`.
+
+You should now have a VM that has local, isolated, access to your currently
+checked out Puppet master module configuration.
+
+## Basic usage
+
+0. Follow [Quickstart](#quickstart).
+1. Edit `config.yaml` to add "local module overrides", e.g. your role and/or
+   profile modules.
+2. Run `vagrant reload`. (Only required if changes are made to `local-modules`
+   in `config.yaml`)
+3. Edit `puppet/manifests/main.pp` to your liking. E.g. add a role or profile
+   to the default node.
+4. Run `vagrant provision` (or `vagrant up --provision` if the guest is not
+   running). You should now have a VM that has a manifest applied to it, using
+   your local versions of the overridden modules.
+5. Hack on your locally overriden modules.
+6. Goto #4 until finished.
+
 
 ## Features
 
@@ -71,17 +103,6 @@ local Vagrant VM then edit `facter.override` and add them using the pattern
 `export FACTER_<factname>=<factvalue>`.
 
 The file is basically sourced in bash before puppet runs.
-
-## Usage
-
-1. Clone the vagrant-puppet-r10k-bootstrap repository.
-2. Change `r10k-repo-path` in `config.yaml` to point to your clone with
-your Puppetfile. Adjust `dist-module-directory` if needed.
-3. Disable envpuppet support if you're not using it.
-4. Edit `puppet/manifests/main.pp` to your liking.
-5. Run `vagrant up`
-6. Hack on modules
-7. Run `vagrant provision` to rerun puppet on the VM
 
 
 ## Configuration
