@@ -2,7 +2,7 @@
 A vagrant puppet setup that supports module development using
 [r10k](https://github.com/puppetlabs/r10k), hiera,
 [envpuppet](https://puppetlabs.com/blog/use-envpuppet-test-multiple-puppet-versions),
-facter overrides (via custom environment variables) and more.
+facter overrides and more.
 
 ####Table of Contents
 1. [Use case](#use-case)
