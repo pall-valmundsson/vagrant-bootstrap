@@ -6,7 +6,8 @@ require 'yaml'
 Vagrant.configure("2") do |config|
   config.vm.box = "puppetlabs/centos-6.5-64-puppet"
 
-  config.vm.network :public_network
+  # Uncomment to enable bridged interface
+  #config.vm.network :public_network
 
   config.vm.hostname = "vagranthost.local"
 
