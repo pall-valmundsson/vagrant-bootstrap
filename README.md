@@ -110,7 +110,7 @@ Edit `config.yaml`, `facter.override` and `puppet/vagranthost.local.yaml` to
 your needs. There are comments inside the files and more info above.
 
 ####Copyright
-Copyright 2014-2015, Pall Valmundsson
+Copyright 2013-2015, Pall Valmundsson
 
 ####Credits
 Based heavily on [vagrant-puppet-librarian](https://github.com/mindreframer/vagrant-puppet-librarian).
