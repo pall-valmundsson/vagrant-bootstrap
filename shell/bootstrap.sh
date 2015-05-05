@@ -79,7 +79,7 @@ fi
 
 # Make r10k install all the modules
 echo "Running r10k..."
-PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install -v
+PATH=$PATH:/usr/local/bin PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install -v
 
 # Remove the local-modules from the Puppetfile deployed modulepath, if they're managed by that
 for module in /vagrant/puppet/local_modules/*
