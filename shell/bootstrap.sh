@@ -74,7 +74,11 @@ fi
 # Install r10k
 echo "Installing r10k..."
 if [ `gem query --local | grep r10k | wc -l` -eq 0 ]; then
-  gem install r10k --no-ri --no-rdoc
+  if [ "$(ruby -e 'print RUBY_VERSION')" == '1.8.7' ]; then
+    gem install r10k --version '~>1.5' --no-ri --no-rdoc
+  else
+    gem install r10k --no-ri --no-rdoc
+  fi
 fi
 
 # Make r10k install all the modules
