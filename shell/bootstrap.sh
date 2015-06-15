@@ -81,15 +81,18 @@ if [ `gem query --local | grep r10k | wc -l` -eq 0 ]; then
   fi
 fi
 
+# Create r10k cache dir
+R10K_MODULE_CACHE_DIR="/vagrant/puppet/r10kcache"
+mkdir -p ${R10K_MODULE_CACHE_DIR}
 # Make r10k install all the modules
 echo "Running r10k..."
-PATH=$PATH:/usr/local/bin PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=$PUPPET_DIR/modules r10k puppetfile install -v
+PATH=$PATH:/usr/local/bin PUPPETFILE=$PUPPET_DIR/Puppetfile PUPPETFILE_DIR=${R10K_MODULE_CACHE_DIR}/modules r10k puppetfile install -v
 
 # Remove the local-modules from the Puppetfile deployed modulepath, if they're managed by that
 for module in /vagrant/puppet/local_modules/*
 do
     module_name=$(basename ${module})
-    module_path="${PUPPET_DIR}/modules/${module_name}"
+    module_path="${R10K_MODULE_CACHE_DIR}/modules/${module_name}"
     if [ -d "${module_path}" ]; then
         echo "   Removing ${module} from Puppetfile deployed modules..."
         rm -rf "${module_path}"
@@ -105,4 +108,5 @@ fi
 env
 
 # And now we run puppet
-puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
+echo "Executing: puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:${R10K_MODULE_CACHE_DIR}/modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp"
+puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:${R10K_MODULE_CACHE_DIR}/modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
