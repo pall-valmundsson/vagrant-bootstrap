@@ -110,3 +110,11 @@ env
 # And now we run puppet
 echo "Executing: puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:${R10K_MODULE_CACHE_DIR}/modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp"
 puppet apply -vt --modulepath=$PUPPET_DIR/modules:/vagrant/puppet/local_modules:${R10K_MODULE_CACHE_DIR}/modules:/vagrant/puppet/r10kmodules/$DIST_DIR $PUPPET_DIR/manifests/main.pp
+
+retval=$?
+if [ $retval -eq 2 ]; then
+    # puppet apply exit code 2 means changes, which is OK
+    let retval=0
+fi
+echo "Exiting with $retval"
+exit $retval
